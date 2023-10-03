@@ -1,5 +1,4 @@
 #include "passenger.h"
-#include <string.h>
 
 struct passenger
 {
