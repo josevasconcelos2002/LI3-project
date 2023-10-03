@@ -8,7 +8,7 @@ char *get_user_name(User *u);
 char *get_user_email(User *u);
 int get_user_phone_number(User *u);
 char *get_user_birth_date(User *u);
-char get_user_sex(User *u);
+char *get_user_sex(User *u);
 int get_user_passport(User *u);
 char *get_user_country_code(User *u);
 char *get_user_adress(User *u);
