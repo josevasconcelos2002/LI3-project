@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <ctype.h>
+#include <math.h>
 
 
 // Verifica se a string está vazia
@@ -228,7 +229,7 @@ static void valid_passenger(){
 
 
 // criação de "reservation-valid.csv"
-static void valid_passenger(){
+static void valid_reservation(){
     FILE *fp = fopen ("entrada/reservation.csv", "r");
     FILE *reservation_valid = fopen ("Resultados/reservation-valid.csv","w");
     char*line = NULL;
@@ -303,7 +304,7 @@ static void valid_passenger(){
 
 
 // criação de "user-valid.csv"
-static void valid_passenger(){
+static void valid_user(){
     FILE *fp = fopen ("entrada/user.csv", "r");
     FILE *user_valid = fopen ("Resultados/user-valid.csv","w");
     char*line = NULL;
@@ -378,3 +379,10 @@ int limpar_dados_invalidos () {
    valid_user();
    return 0;
 }
+
+
+/* For Testing
+int main(){
+   limpar_dados_invalidos();
+}
+*/
