@@ -30,13 +30,13 @@ LDFLAGS = `pkg-config --libs glib-2.0` -lm
 # To execute this rule, the make will first need to execute rules 'src/main.o', 'src/file1.o',
 # and 'src/file2.o', as specified in the list of dependencies (right)
 
-all: programa-principal programa-testes
+all: programa-principal #programa-testes
 
-programa-principal: src/Data/users.o src/Data/rides.o src/Data/drivers.o src/Data/hashtables.o src/Data/validations.o src/Queries/getInfoById.o src/Queries/getTopDrivers.o src/Queries/getTopUsersByDistanceTraveled.o src/Queries/getAveragePriceByCity.o src/Queries/getAveragePriceByTime.o src/Queries/getAverageDistanceByCityAndTime.o src/Queries/getTopDrivresByCity.o src/Queries/getInfoByGenderOrDate.o src/Queries/getTippedVoyagesByData.o src/batch.o src/interface.o src/main.o 
+programa-principal: src/Data/user.o src/Data/passenger.o src/Data/flight.o src/Data/reservation.o src/Data/validation.o  src/main.o
 	$(CC) $^ $(LDFLAGS) -o $@
 
-programa-testes: src/tests.o src/Data/users.o src/Data/rides.o src/Data/drivers.o src/Data/hashtables.o src/Data/validations.o src/Queries/getInfoById.o src/Queries/getTopDrivers.o src/Queries/getTopUsersByDistanceTraveled.o src/Queries/getAveragePriceByCity.o src/Queries/getAveragePriceByTime.o src/Queries/getAverageDistanceByCityAndTime.o src/Queries/getTopDrivresByCity.o src/Queries/getInfoByGenderOrDate.o src/Queries/getTippedVoyagesByData.o src/batch.o src/interface.o
-	$(CC) $^ $(LDFLAGS) -o $@
+#programa-testes: src/tests.o src/Data/users.o src/Data/rides.o src/Data/drivers.o src/Data/hashtables.o src/Data/validations.o src/Queries/getInfoById.o src/Queries/getTopDrivers.o src/Queries/getTopUsersByDistanceTraveled.o src/Queries/getAveragePriceByCity.o src/Queries/getAveragePriceByTime.o src/Queries/getAverageDistanceByCityAndTime.o src/Queries/getTopDrivresByCity.o src/Queries/getInfoByGenderOrDate.o src/Queries/getTippedVoyagesByData.o src/batch.o src/interface.o
+#	$(CC) $^ $(LDFLAGS) -o $@
 
 
 
@@ -54,45 +54,27 @@ src/main.o: src/main.c
 #	$(CC) $(CFLAGS) -c -o $@ $^
 
 # Here we generate the object files for batch mode.
-src/batch.o: src/batch.c
+#src/batch.o: src/batch.c
 # Here we generate the object files for interface mode.
-src/interface.o: src/interface.c
+#src/interface.o: src/interface.c
 # Here we generate the object files for tests.
-src/tests.o: src/tests.c
-# Here we generate the object files for  getInfoById.
-src/Queries/getInfoById.o: src/Queries/getInfoById.c
-# Here we generate the object files for getTopDrivers.
-src/Queries/getTopDrivers.o: src/Queries/getTopDrivers.c
-# Here we generate the object files for getTopUsersByDistanceTraveled.
-src/Queries/getTopUsersByDistanceTraveled.o: src/Queries/getTopUsersByDistanceTraveled.c
-# Here we generate the object files for getAveragePriceByCity.
-src/Queries/getAveragePriceByCity.o: src/Queries/getAveragePriceByCity.c
-# Here we generate the object files for getAveragePriceByTime.
-src/Queries/getAveragePriceByTime.o: src/Queries/getAveragePriceByTime.c
-# Here we generate the object files for getAverageDistanceByCityAndTime.
-src/Queries/getAverageDistanceByCityAndTime.o: src/Queries/getAverageDistanceByCityAndTime.c
-# Here we generate the object files for getTopDrivresByCity.
-src/Queries/getTopDrivresByCity.o: src/Queries/getTopDrivresByCity.c
-# Here we generate the object files for getInfoByGenderOrDate.
-src/Queries/getInfoByGenderOrDate.o: src/Queries/getInfoByGenderOrDate.c
-# Here we generate the object files for getTippedVoyagesByData.
-src/Queries/getTippedVoyagesByData.o: src/Queries/getTippedVoyagesByData.c
+#src/tests.o: src/tests.c
 
-# Here we generate the object files for drivers.
-src/Data/drivers.o: src/Data/drivers.c
-# Here we generate the object files for users.
-src/Data/users.o: src/Data/users.c
-# Here we generate the object files for rides.
-src/Data/rides.o: src/Data/rides.c
-# Here we generate the object files for hashtables.
-src/Data/hashtables.o: src/Data/hashtables.c
+# Here we generate the object files for user.
+src/Data/user.o: src/Data/user.c
+# Here we generate the object files for passenger.
+src/Data/passenger.o: src/Data/passenger.c
+# Here we generate the object files for flght.
+src/Data/flight.o: src/Data/flight.c
+# Here we generate the object files for reservation.
+src/Data/reservation.o: src/Data/reservation.c
 # Here we generate the object files for validations.
-src/Data/validations.o: src/Data/validations.c
+src/Data/validation.o: src/Data/validation.c
 
 # The clean will remove the executable (programa-principal && programa-testes) and object files (*.o).
 # To run it, we must execute 'make clean'
 clean:
-	rm -f programa-principal programa-testes teste src/*.o src/Data/*.o src/Queries/*.o src/Data/*.gch src/Queries/*.gch *.log src/*.gch
+	rm -f programa-principal programa-testes teste src/*.o src/Data/*.o  src/Data/*.gch  *.log src/*.gch
 	rm -rf ./Resultados/
 	rm -rf ./testes/
 #rm -f for ubuntu

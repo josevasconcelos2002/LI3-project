@@ -1,4 +1,4 @@
-#include "flight.h"
+#include "../../include/flight.h"
 #include <string.h>
 
 struct flight

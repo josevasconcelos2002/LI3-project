@@ -1,4 +1,4 @@
-#include "user.h"
+#include "../../include/user.h"
 #include <string.h>
 
 struct user
@@ -41,7 +41,7 @@ int get_user_phone_number(User *u)
 
 char *get_user_birth_date(User *u)
 {
-    char *birth_date = strdupt(u->birth_date);
+    char *birth_date = strdup(u->birth_date);
     return birth_date;
 }
 
