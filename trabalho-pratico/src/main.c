@@ -1,5 +1,6 @@
 #include "../include/validation.h"
 #include "../include/interface.h"
+#include "../include/batch.h"
 #include <stdio.h>
 
 int main(int argc, char **argv)
@@ -8,7 +9,8 @@ int main(int argc, char **argv)
 
     if (argc == 3)
     {
-        // modo batch;
+        // modo batch
+        batch(argc, argv);
     }
     else
         // modo interativo
