@@ -130,7 +130,7 @@ bool valid_date(const char *date)
 static void valid_flight()
 {
    FILE *fp = fopen("entrada/flight.csv", "r");
-   FILE *flight_valid = fopen("Resultados/flight-valid.csv", "w");
+   FILE *flight_valid = fopen("Valid/flight-valid.csv", "w");
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
@@ -244,7 +244,7 @@ static void valid_flight()
 static void valid_passenger()
 {
    FILE *fp = fopen("entrada/passenger.csv", "r");
-   FILE *passenger_valid = fopen("Resultados/passenger-valid.csv", "w");
+   FILE *passenger_valid = fopen("Valid/passenger-valid.csv", "w");
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
@@ -292,7 +292,7 @@ static void valid_passenger()
 static void valid_reservation()
 {
    FILE *fp = fopen("entrada/reservation.csv", "r");
-   FILE *reservation_valid = fopen("Resultados/reservation-valid.csv", "w");
+   FILE *reservation_valid = fopen("Valid/reservation-valid.csv", "w");
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
@@ -412,7 +412,7 @@ static void valid_reservation()
 static void valid_user()
 {
    FILE *fp = fopen("entrada/user.csv", "r");
-   FILE *user_valid = fopen("Resultados/user-valid.csv", "w");
+   FILE *user_valid = fopen("Valid/user-valid.csv", "w");
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
@@ -517,13 +517,12 @@ static void valid_user()
 }
 
 // Função principal
-int limpar_dados_invalidos()
+void limpar_dados_invalidos()
 {
    valid_flight();
    valid_passenger();
    valid_reservation();
    valid_user();
-   return 0;
 }
 
 /* For Testing
