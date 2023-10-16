@@ -134,8 +134,8 @@ static void valid_flight()
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
-   int c_pal;
-   int checker;
+   int c_pal = 0;
+   int checker = 1;
 
    for (int i = 0; (getline(&line, &len, fp) != -1); i++)
    {
@@ -248,8 +248,8 @@ static void valid_passenger()
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
-   int c_pal;
-   int checker;
+   int c_pal = 0;
+   int checker = 1;
 
    for (int i = 0; (getline(&line, &len, fp) != -1); i++)
    {
@@ -296,8 +296,8 @@ static void valid_reservation()
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
-   int c_pal;
-   int checker;
+   int c_pal = 0;
+   int checker = 1;
 
    for (int i = 0; (getline(&line, &len, fp) != -1); i++)
    {
@@ -416,8 +416,8 @@ static void valid_user()
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
-   int c_pal;
-   int checker;
+   int c_pal = 0;
+   int checker = 1;
 
    for (int i = 0; (getline(&line, &len, fp) != -1); i++)
    {
