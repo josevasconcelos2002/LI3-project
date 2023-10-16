@@ -1,7 +1,0 @@
-{
-  "files.associations": {
-    "passenger.h": "c",
-    "reservation.h": "c",
-    "flight.h": "c"
-  }
-}
