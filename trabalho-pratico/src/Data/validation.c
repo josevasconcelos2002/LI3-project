@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include <math.h>
 #include <stdbool.h>
+#include <sys/stat.h>
 
 // Verifica se a string está vazia e se o apontador é !NULL
 static bool valid_string(char *found)
@@ -126,11 +127,13 @@ bool valid_date(const char *date)
    return true;
 }
 
-// criação de "flight-valid.csv"
-static void valid_flight()
+// criação de "flights-valid.csv"
+static void valid_flights(char *dataset_path)
 {
-   FILE *fp = fopen("entrada/flight.csv", "r");
-   FILE *flight_valid = fopen("Valid/flight-valid.csv", "w");
+   char file_path[256];
+   snprintf(file_path, sizeof(file_path), "%sflights.csv", dataset_path);
+   FILE *fp = fopen(file_path, "r");
+   FILE *flight_valid = fopen("Valid/flights-valid.csv", "w");
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
@@ -240,11 +243,13 @@ static void valid_flight()
    fclose(flight_valid);
 }
 
-// criação de "passenger-valid.csv"
-static void valid_passenger()
+// criação de "passengers-valid.csv"
+static void valid_passengers(char *dataset_path)
 {
-   FILE *fp = fopen("entrada/passenger.csv", "r");
-   FILE *passenger_valid = fopen("Valid/passenger-valid.csv", "w");
+   char file_path[256];
+   snprintf(file_path, sizeof(file_path), "%spassengers.csv", dataset_path);
+   FILE *fp = fopen(file_path, "r");
+   FILE *passenger_valid = fopen("Valid/passengers-valid.csv", "w");
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
@@ -288,11 +293,13 @@ static void valid_passenger()
    fclose(passenger_valid);
 }
 
-// criação de "reservation-valid.csv"
-static void valid_reservation()
+// criação de "reservations-valid.csv"
+static void valid_reservations(char *dataset_path)
 {
-   FILE *fp = fopen("entrada/reservation.csv", "r");
-   FILE *reservation_valid = fopen("Valid/reservation-valid.csv", "w");
+   char file_path[256];
+   snprintf(file_path, sizeof(file_path), "%sreservations.csv", dataset_path);
+   FILE *fp = fopen(file_path, "r");
+   FILE *reservation_valid = fopen("Valid/reservations-valid.csv", "w");
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
@@ -408,11 +415,13 @@ static void valid_reservation()
    fclose(reservation_valid);
 }
 
-// criação de "user-valid.csv"
-static void valid_user()
+// criação de "users-valid.csv"
+static void valid_users(char *dataset_path)
 {
-   FILE *fp = fopen("entrada/user.csv", "r");
-   FILE *user_valid = fopen("Valid/user-valid.csv", "w");
+   char file_path[256];
+   snprintf(file_path, sizeof(file_path), "%susers.csv", dataset_path);
+   FILE *fp = fopen(file_path, "r");
+   FILE *user_valid = fopen("Valid/users-valid.csv", "w");
    char *line = NULL;
    size_t len = 0;
    char *string, *found, *aux;
@@ -517,16 +526,14 @@ static void valid_user()
 }
 
 // Função principal
-void limpar_dados_invalidos()
+void limpar_dados_invalidos(char *dataset_path)
 {
-   valid_flight();
-   valid_passenger();
-   valid_reservation();
-   valid_user();
+   if (mkdir("Valid", 0777) == 0)
+   {
+      printf("Pasta Valid criada com sucesso!\n");
+      valid_flights(dataset_path);
+      valid_passengers(dataset_path);
+      valid_reservations(dataset_path);
+      valid_users(dataset_path);
+   }
 }
-
-/* For Testing
-int main(){
-   limpar_dados_invalidos();
-}
-*/

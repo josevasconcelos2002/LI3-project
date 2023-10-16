@@ -1,37 +1,71 @@
 #include "../include/batch.h"
+#include "../include/validation.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
 #include <stdbool.h>
+#include <string.h>
 
-bool user_file_exists(char *path)
+bool users_file_exists(const char *path)
 {
     bool result = false;
+    char file_path[256];
+    snprintf(file_path, sizeof(file_path), "%susers.csv", path);
+    FILE *fp = fopen(file_path, "r");
+    if (fp)
+    {
+        fclose(fp);
+        result = true;
+    }
     return result;
 }
 
-bool reservation_file_exists(char *path)
+bool reservations_file_exists(const char *path)
 {
     bool result = false;
+    char file_path[256];
+    snprintf(file_path, sizeof(file_path), "%sreservations.csv", path);
+    FILE *fp = fopen(file_path, "r");
+    if (fp)
+    {
+        fclose(fp);
+        result = true;
+    }
     return result;
 }
 
-bool passenger_file_exists(char *path)
+bool passengers_file_exists(const char *path)
 {
     bool result = false;
+    char file_path[256];
+    snprintf(file_path, sizeof(file_path), "%spassengers.csv", path);
+    FILE *fp = fopen(file_path, "r");
+    if (fp)
+    {
+        fclose(fp);
+        result = true;
+    }
     return result;
 }
 
-bool flight_file_exists(char *path)
+bool flights_file_exists(const char *path)
 {
     bool result = false;
+    char file_path[256];
+    snprintf(file_path, sizeof(file_path), "%sflights.csv", path);
+    FILE *fp = fopen(file_path, "r");
+    if (fp)
+    {
+        fclose(fp);
+        result = true;
+    }
     return result;
 }
 
 bool files_exist(char *path)
 {
     bool result = false;
-    if (flight_file_exists(path) && passenger_file_exists(path) && reservation_file_exists(path) && user_file_exists(path))
+    if (flights_file_exists(path) && passengers_file_exists(path) && reservations_file_exists(path) && users_file_exists(path))
         result = true;
     return result;
 }
@@ -55,8 +89,14 @@ void batch(int argc, char **argv)
         {
             printf("argv[%d] -> %s\n", i, argv[i]);
         }
+
         char *dataset_path = argv[1];
+        if (dataset_path[strlen(dataset_path) - 1] != '/')
+        {
+            strcat(dataset_path, "/");
+        }
         // char *input = argv[2];
+
         if (!folderExists(dataset_path))
         {
             printf("\033[1;31m");
@@ -73,6 +113,7 @@ void batch(int argc, char **argv)
                 printf("\033[1;32m");
                 printf("\n\nTodos os ficheiros foram encontrados!\n\n");
                 printf("\033[0m");
+                limpar_dados_invalidos(dataset_path);
             }
             else
             {

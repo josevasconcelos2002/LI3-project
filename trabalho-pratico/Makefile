@@ -81,6 +81,7 @@ clean:
 	rm -f programa-principal programa-testes teste src/*.o src/Data/*.o  src/Data/*.gch  *.log src/*.gch
 	rm -rf ./Resultados/
 	rm -rf ./testes/
+	rm -rf ./Valid/
 #rm -f for ubuntu
 #del -rf for windows
 
