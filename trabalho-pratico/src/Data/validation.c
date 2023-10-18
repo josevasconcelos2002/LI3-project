@@ -106,8 +106,22 @@ static bool valid_account_status(char *found)
 }
 */
 
+static bool valid_hour(char *hours)
+{
+   int hour, minute, second;
+   if (sscanf(hours, "%d:%d:%d", &hour, &minute, &second) != 3)
+      return false;
+   if (hour < 0 || hour > 23)
+      return false;
+   if (minute < 0 || minute > 59)
+      return false;
+   if (second < 0 || second > 59)
+      return false;
+   return true;
+}
+
 /**
- * @brief This function is used to see if a date is valid or not.
+ * @brief This function is used to verify if a date is valid or not.
  *
  * @param date  Pointer to a date (yyyy/mm/dd).
  *
@@ -194,25 +208,81 @@ static void valid_flights(char *dataset_path)
             // schedule_departure_date
             if (c_pal == 6)
             {
-               checker = valid_date(found);
+               if (found)
+               {
+                  char *date = strtok(found, " ");
+                  char *time = strtok(NULL, " ");
+                  if (date && time)
+                  {
+                     checker = valid_date(date) && valid_hour(time);
+                  }
+                  else
+                  {
+                     checker = false;
+                  }
+               }
+               else
+                  checker = false;
             }
 
             // schedyle_arrival_date
             if (c_pal == 7)
             {
-               checker = valid_date(found);
+               if (found)
+               {
+                  char *date = strtok(found, " ");
+                  char *time = strtok(NULL, " ");
+                  if (date && time)
+                  {
+                     checker = valid_date(date) && valid_hour(time);
+                  }
+                  else
+                  {
+                     checker = false;
+                  }
+               }
+               else
+                  checker = false;
             }
 
             // real_departure_date
             if (c_pal == 8)
             {
-               checker = valid_date(found);
+               if (found)
+               {
+                  char *date = strtok(found, " ");
+                  char *time = strtok(NULL, " ");
+                  if (date && time)
+                  {
+                     checker = valid_date(date) && valid_hour(time);
+                  }
+                  else
+                  {
+                     checker = false;
+                  }
+               }
+               else
+                  checker = false;
             }
 
             // real_arrival_date
             if (c_pal == 9)
             {
-               checker = valid_date(found);
+               if (found)
+               {
+                  char *date = strtok(found, " ");
+                  char *time = strtok(NULL, " ");
+                  if (date && time)
+                  {
+                     checker = valid_date(date) && valid_hour(time);
+                  }
+                  else
+                  {
+                     checker = false;
+                  }
+               }
+               else
+                  checker = false;
             }
 
             // pilot
