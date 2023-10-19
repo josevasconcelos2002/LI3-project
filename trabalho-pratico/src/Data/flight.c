@@ -93,3 +93,19 @@ char *get_flight_notes(Flight *f)
     char *notes = strdup(f->notes);
     return notes;
 }
+
+void free_flight(Flight *f)
+{
+    free(f->airline);
+    free(f->plane_model);
+    free(f->origin);
+    free(f->destination);
+    free(f->schedule_departure_date);
+    free(f->schedule_arrival_date);
+    free(f->real_departure_date);
+    free(f->real_arrival_date);
+    free(f->pilot);
+    free(f->copilot);
+    free(f->notes);
+    free(f);
+}

@@ -16,5 +16,6 @@ char *get_flight_real_arrival_date(Flight *f);
 char *get_flight_pilot(Flight *f);
 char *get_flight_copilot(Flight *f);
 char *get_flight_notes(Flight *f);
+void free_flight(Flight *f);
 
 #endif
