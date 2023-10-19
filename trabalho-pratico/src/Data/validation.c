@@ -9,6 +9,9 @@
 #include <stdbool.h>
 #include <sys/stat.h>
 
+#define current_date "2023/10/01"
+
+
 // Verifica se a string está vazia e se o apontador é !NULL
 static bool valid_string(char *found)
 {
@@ -43,13 +46,14 @@ static bool valid_int(char *found)
 }
 
 // verifica doubles
-static int valid_double(char *found)
+
+static bool valid_double(char *found)
 {
    int tam = strlen(found);
    int dotCount = 0;
 
    if (tam == 0)
-      return 0;
+      return false;
 
    for (int i = 0; i < tam; i++)
    {
@@ -61,23 +65,17 @@ static int valid_double(char *found)
          }
          else
          {
-            return 0;
+            return false;
          }
       }
    }
 
    double num = atof(found);
    if (num <= 0.0)
-      return 0;
-
-   // Arredonda para 3 casas decimais
-   double roundedNum = round(num * 1000) / 1000.0;
-
-   // Se o número original e o número arredondado são diferentes, significa que havia mais de 3 casas decimais
-   if (num != roundedNum)
-      return 0;
-   return 1;
+      return false;
+   return true;
 }
+
 
 // verifica bools
 static bool valid_bool(char *found)
@@ -141,6 +139,32 @@ bool valid_date(const char *date)
    return true;
 }
 
+//comparar dates
+bool compare_dates(const char *date1, const char *date2)
+{
+
+    int year1, month1, day1;
+    int year2, month2, day2;
+
+    sscanf(date1, "%d/%d/%d", &year1, &month1, &day1);
+    sscanf(date2, "%d/%d/%d", &year2, &month2, &day2);
+
+    if (year1 > year2)
+        return true;
+    else if (year1 < year2)
+        return false;
+
+    // If the years are equal, compare months
+    if (month1 > month2)
+        return true;
+    else if (month1 < month2)
+        return false;
+
+    // If the months are equal, compare days
+    //if(day1 > day2)
+    return true;
+}
+
 // criação de "flights-valid.csv"
 static void valid_flights(char *dataset_path)
 {
@@ -153,6 +177,10 @@ static void valid_flights(char *dataset_path)
    char *string, *found, *aux;
    int c_pal = 0;
    int checker = 1;
+   static char schedule_departure_date[20];  // Assuming "yyyy/mm/dd hh:mm:ss" format
+   static char schedule_arrival_date[20];
+   static char real_departure_date[20];  
+   static char real_arrival_date[20];
 
    for (int i = 0; (getline(&line, &len, fp) != -1); i++)
    {
@@ -223,9 +251,13 @@ static void valid_flights(char *dataset_path)
                }
                else
                   checker = false;
+               if (checker != 0)
+               {
+                  strcpy(schedule_departure_date, found);
+               }
             }
 
-            // schedyle_arrival_date
+            // schedule_arrival_date
             if (c_pal == 7)
             {
                if (found)
@@ -243,6 +275,11 @@ static void valid_flights(char *dataset_path)
                }
                else
                   checker = false;
+               if (checker != 0)
+               {
+                  strcpy(schedule_arrival_date, found);
+                  checker = compare_dates(schedule_arrival_date,schedule_departure_date);
+               }
             }
 
             // real_departure_date
@@ -263,6 +300,10 @@ static void valid_flights(char *dataset_path)
                }
                else
                   checker = false;
+               if (checker != 0)
+               {
+                  strcpy(real_departure_date, found);
+               }
             }
 
             // real_arrival_date
@@ -283,6 +324,11 @@ static void valid_flights(char *dataset_path)
                }
                else
                   checker = false;
+               if (checker != 0)
+               {
+                  strcpy(real_arrival_date, found);
+                  checker = compare_dates(real_arrival_date,real_departure_date);
+               }
             }
 
             // pilot
@@ -302,6 +348,7 @@ static void valid_flights(char *dataset_path)
             {
                checker = valid_string(found);
             }
+            if(!checker)printf("%d\n",c_pal);
          }
          free(aux);
       }
@@ -375,6 +422,8 @@ static void valid_reservations(char *dataset_path)
    char *string, *found, *aux;
    int c_pal = 0;
    int checker = 1;
+   static char begin_date[11];  // Assuming "yyyy/mm/dd" format
+   static char end_date[11];
 
    for (int i = 0; (getline(&line, &len, fp) != -1); i++)
    {
@@ -437,12 +486,22 @@ static void valid_reservations(char *dataset_path)
             if (c_pal == 7)
             {
                checker = valid_date(found);
+               if (checker != 0)
+               {
+                  strcpy(begin_date, found);
+               }
             }
 
             // end_date
             if (c_pal == 8)
             {
                checker = valid_date(found);
+               if (checker != 0)
+               {
+                  strcpy(end_date, found);
+                  checker = compare_dates(end_date,begin_date);
+               }
+
             }
 
             // price_per_night
@@ -497,6 +556,8 @@ static void valid_users(char *dataset_path)
    char *string, *found, *aux;
    int c_pal = 0;
    int checker = 1;
+   static char birth_date[11];  // Assuming "yyyy/mm/dd" format
+   static char account_creation[11];
 
    for (int i = 0; (getline(&line, &len, fp) != -1); i++)
    {
@@ -541,6 +602,10 @@ static void valid_users(char *dataset_path)
             if (c_pal == 4)
             {
                checker = valid_date(found);
+               if (checker != 0)
+               {
+                  strcpy(birth_date, found);
+               }
             }
 
             // sex
@@ -571,6 +636,11 @@ static void valid_users(char *dataset_path)
             if (c_pal == 9)
             {
                checker = valid_date(found);
+               if (checker != 0)
+               {
+                  strcpy(account_creation, found);
+                  checker = (compare_dates(account_creation,birth_date));
+               }
             }
 
             // pay_method
