@@ -2,6 +2,8 @@
 #include "../../include/hashtables.h"
 #include "../../include/flight.h"
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
  * @brief This function is responsible for storing every Flight's info, which is taken from
@@ -12,14 +14,16 @@
  *
  * @return void.
  */
-void parse_flights(const char *path, catalogo_Flights *cat_flights)
+void parse_flights(char *path, catalogo_Flights *cat_flights)
 {
-    if (path[strlen(path) - 1] != '/')
+    char *temp_path = strdup(path); // Copia o conteúdo de path para temp_path
+    if (temp_path[strlen(temp_path) - 1] != '/')
     {
-        strcat(path, "/");
+        strcat(temp_path, "/");
     }
-    char file_path[256];
-    snprintf(file_path, sizeof(file_path), "%sflights-valid.csv", path);
+
+    char file_path[280];
+    snprintf(file_path, sizeof(file_path), "%sflights-valid.csv", temp_path);
     FILE *fp = fopen(file_path, "r");
     if (!fp)
     {
@@ -36,7 +40,7 @@ void parse_flights(const char *path, catalogo_Flights *cat_flights)
         if (row_count <= 1)
             continue;
 
-        Flight *f = malloc(sizeof(Flight));
+        Flight *f = malloc(sizeof(struct flight));
         if (!f)
         {
             printf("Memory allocation failed for Flight.\n");
@@ -55,7 +59,7 @@ void parse_flights(const char *path, catalogo_Flights *cat_flights)
                 switch (field_count)
                 {
                 case 0:
-                    f->id = atoi(field);
+                    f->id = strdup(field);
                     break;
                 case 1:
                     f->airline = strdup(field);

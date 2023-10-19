@@ -1,26 +1,16 @@
 #include "../../include/flight.h"
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-struct flight
+char *get_flight_id(Flight *f)
 {
-    int id;
-    char *airline;
-    char *plane_model;
-    int total_seats;
-    char *origin;
-    char *destination;
-    char *schedule_departure_date;
-    char *schedule_arrival_date;
-    char *real_departure_date;
-    char *real_arrival_date;
-    char *pilot;
-    char *copilot;
-    char *notes;
-};
-
-int get_flight_id(Flight *f)
-{
-    return f->id;
+    char *flight_id = NULL;
+    if (f)
+    {
+        flight_id = strdup(f->id);
+    }
+    return flight_id;
 }
 
 char *get_flight_airline(Flight *f)
@@ -108,4 +98,21 @@ void free_flight(Flight *f)
     free(f->copilot);
     free(f->notes);
     free(f);
+}
+
+void print_flight(Flight *f)
+{
+    printf("id: %s\n", get_flight_id(f));
+    printf("airline: %s\n", get_flight_airline(f));
+    printf("plane model: %s\n", get_flight_plane_model(f));
+    printf("total seats: %d\n", get_flight_total_seats(f));
+    printf("origin: %s\n", get_flight_origin(f));
+    printf("destination: %s\n", get_flight_destination(f));
+    printf("schedule departure date: %s\n", get_flight_schedule_departure_date(f));
+    printf("schedule arrival date: %s\n", get_flight_schedule_arrival_date(f));
+    printf("real departure date: %s\n", get_flight_real_departure_date(f));
+    printf("real arrival date: %s\n", get_flight_real_arrival_date(f));
+    printf("pilot: %s\n", get_flight_pilot(f));
+    printf("copilot: %s\n", get_flight_copilot(f));
+    printf("notes: %s\n", get_flight_notes(f));
 }

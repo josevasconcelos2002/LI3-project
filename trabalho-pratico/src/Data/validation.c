@@ -172,7 +172,7 @@ static void valid_flights(char *dataset_path)
             // id
             if (c_pal == 0)
             {
-               checker = valid_int(found);
+               checker = valid_string(found);
             }
 
             // airline

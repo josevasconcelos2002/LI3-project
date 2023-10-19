@@ -32,7 +32,7 @@ LDFLAGS = `pkg-config --libs glib-2.0` -lm
 
 all: programa-principal #programa-testes
 
-programa-principal: src/Data/user.o src/Data/passenger.o src/Data/flight.o src/Data/reservation.o src/Data/validation.o  src/main.o src/interface.o src/batch.o src/Data/hashtables.o
+programa-principal: src/Data/user.o src/Data/passenger.o src/Data/flight.o src/Data/reservation.o src/Data/validation.o  src/main.o src/interface.o src/Data/hashtables.o src//Data/parser.o src/batch.o 
 	$(CC) $^ $(LDFLAGS) -o $@
 
 #programa-testes: src/tests.o src/Data/users.o src/Data/rides.o src/Data/drivers.o src/Data/hashtables.o src/Data/validations.o src/Queries/getInfoById.o src/Queries/getTopDrivers.o src/Queries/getTopUsersByDistanceTraveled.o src/Queries/getAveragePriceByCity.o src/Queries/getAveragePriceByTime.o src/Queries/getAverageDistanceByCityAndTime.o src/Queries/getTopDrivresByCity.o src/Queries/getInfoByGenderOrDate.o src/Queries/getTippedVoyagesByData.o src/batch.o src/interface.o
@@ -60,12 +60,6 @@ src/main.o: src/main.c
 # Here we generate the object files for tests.
 #src/tests.o: src/tests.c
 
-src/batch.o: src/batch.c
-
-src/interface.o: src/interface.c
-
-src/Data/hashtables.o: src/Data/hashtables.c
-
 # Here we generate the object files for user.
 src/Data/user.o: src/Data/user.c
 # Here we generate the object files for passenger.
@@ -76,6 +70,16 @@ src/Data/flight.o: src/Data/flight.c
 src/Data/reservation.o: src/Data/reservation.c
 # Here we generate the object files for validations.
 src/Data/validation.o: src/Data/validation.c
+
+
+src/Data/hashtables.o: src/Data/hashtables.c
+
+
+src/Data/parser.o: src/Data/parser.c
+
+src/batch.o: src/batch.c
+
+src/interface.o: src/interface.c
 
 # The clean will remove the executable (programa-principal && programa-testes) and object files (*.o).
 # To run it, we must execute 'make clean'

@@ -1,5 +1,8 @@
 #include "../include/batch.h"
 #include "../include/validation.h"
+#include "../include/hashtables.h"
+#include "../include/flight.h"
+#include "../include/parser.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
@@ -114,6 +117,10 @@ void batch(int argc, char **argv)
                 printf("\n\nTodos os ficheiros foram encontrados!\n\n");
                 printf("\033[0m");
                 limpar_dados_invalidos(dataset_path);
+                catalogo_Flights *cat_flights = init_catalogo_flights();
+                cat_flights->table_flights = new_hashtable();
+                parse_flights("Valid", cat_flights);
+                print_catalogo_flights(cat_flights);
             }
             else
             {

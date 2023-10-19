@@ -1,11 +1,7 @@
 #include "../../include/hashtables.h"
-#include <glib-2.0/glib.h>
 #include "../../include/flight.h"
-
-struct catalogo_flights
-{
-    GHashTable *table_flights;
-};
+#include <glib-2.0/glib.h>
+#include <stdio.h>
 
 struct catalogo_passengers
 {
@@ -92,7 +88,7 @@ void free_catalogo_users(catalogo_Users *cat_users)
     free(cat_users);
 }
 
-const GHashTable *get_table_flights(const catalogo_Flights *cat_flights)
+GHashTable *get_table_flights(catalogo_Flights *cat_flights)
 {
     return cat_flights->table_flights;
 }
@@ -110,4 +106,21 @@ const GHashTable *get_table_reservations(const catalogo_Reservations *cat_reserv
 const GHashTable *get_table_users(const catalogo_Users *cat_users)
 {
     return cat_users->table_users;
+}
+
+void print_flight_pair_key(gpointer key, gpointer value)
+{
+    printf("Key: %s\n", (char *)key);
+    print_flight((Flight *)value);
+    printf("\n");
+}
+
+void print_catalogo_flights(catalogo_Flights *cat_flights)
+{
+    g_hash_table_foreach(cat_flights->table_flights, (GHFunc)print_flight, NULL);
+}
+
+GHashTable *new_hashtable()
+{
+    return g_hash_table_new(g_str_hash, g_str_equal);
 }
