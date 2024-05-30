@@ -3,6 +3,14 @@
 #include "../include/batch.h"
 #include <stdio.h>
 
+/**
+ * @brief This function is responsible for running the main program.
+ *
+ * @param argc
+ * @param argv
+ *
+ * @return int
+ */
 int main(int argc, char **argv)
 {
     // limpar_dados_invalidos();
